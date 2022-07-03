@@ -8,33 +8,20 @@
 # Number must be integer and greater than or equal to 1
 # Destination directory must exist
 
-# Variables
-# Current year
-# End year
-
-# Operation
-
-# Display cal
-
+echo ```
 cal -h
-
+echo ```
 echo "\n"
 
-year=$(cal -h | head -1 | tail -1 | xargs)
-# weeknames=$(cal -h | head -2 | tail -1)
-# firstweek=$(cal -h | head -3 | tail -1)
 number_of_days_in_week=7
+year=$(cal -h | head -1 | tail -1 | xargs)
 first_week_days=${$(echo $(cal -h | head -3 | tail -1)): -1}
 starting_day_offset=$((number_of_days_in_week - first_week_days))
-# | head -3 | tail -1 | rev | xargs | cut -c1)
 last_day=${$(echo $(cal -h)): -1}
 
 echo "Last day: $last_day"
 echo "Starting day offset: $starting_day_offset"
 echo "Year: $year"
-# echo "Offset: $(($number_of_days - $starting_day_offset))"
-# echo "Last Day: ${last_day:-1}"
-#echo "Starting day offset: ${starting_day_offset}"
 
 # Loop from current year to end year
 ## For each year
@@ -44,9 +31,4 @@ echo "Year: $year"
 ##### If the month file already exists, log warning and skip creation
 ##### If the month file doesn't exist, parse cal command into template
 ###### Paste result into the md file
-
-# How do we parse the ncal command?
-## 
-
-
 
