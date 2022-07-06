@@ -85,15 +85,41 @@ get_day_name_by_index () {
   fi
 }
 
-main () {
- local year=$(cal -h $1 $2 | head -1 | tail -1 | xargs)
- echo "# $year"
- echo "\n"
- echo "\`\`\`"
- cal -h $1 $2 | tail -n+2
- echo "\`\`\`"
- echo "\n"
- generate_month $1 $2
+todomd () {
+  local year=$(cal -h $1 $2 | head -1 | tail -1 | xargs)
+
+  echo "# $year"
+  echo "\n"
+  echo "\`\`\`"
+  cal -h $1 $2 | tail -n+2
+  echo "\`\`\`"
+  echo "\n"
+  generate_month $1 $2
 }
 
-main 3 2022
+main () {
+  local month=0
+  local year=0
+
+  while getopts ":m:y:" option; do
+    case $option in
+      m) # month
+        month=$OPTARG;;
+      y) # year
+        year=$OPTARG;;
+      \?) # Invalid option
+        echo "Error: Invalid option"
+        exit;;
+    esac
+  done
+
+  if [[ month -gt 0 && year -gt 0 ]]
+  then
+    todomd $month $year
+  else
+    echo "Error: options out of range"
+  fi
+}
+
+main "$@"
+
