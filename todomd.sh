@@ -1,34 +1,99 @@
 #!/bin/zsh
 
-# Inputs
-# Number of years to generate from current year (default: 1)
-# Destination directory (default: pwd)
+generate_month () {
+  local number_of_days_in_week=7
+  local first_week_days=${$(echo $(cal -h $1 $2 | head -3 | tail -1)): -1}
+  local day_name_index=$((number_of_days_in_week - first_week_days))
+  local last_day=${$(echo $(cal -h $1 $2)): -1}
+  local week_counter=1
 
-# Input validations (Exit script if any are invalid)
-# Number must be integer and greater than or equal to 1
-# Destination directory must exist
+  for i in {1..$last_day}
+  do
+    if [[ $day_name_index == 0 ]]
+    then
+      local nth_week=$(get_nth_week $week_counter)
+      if [[ week_counter -lt 5 ]]
+      then
+        generate_todos "## $nth_week Week Goals:"
+        week_counter=$((week_counter + 1))
+      fi  
+    fi
 
-echo ```
-cal -h
-echo ```
-echo "\n"
+    local day_name=$(get_day_name_by_index $day_name_index)
+    generate_todos "### $day_name $1/$i"
+    
+    if [[ $day_name_index == 6 ]]
+    then
+      day_name_index=0
+    else
+      day_name_index=$((day_name_index + 1))
+    fi
+  done
+}
 
-number_of_days_in_week=7
-year=$(cal -h | head -1 | tail -1 | xargs)
-first_week_days=${$(echo $(cal -h | head -3 | tail -1)): -1}
-starting_day_offset=$((number_of_days_in_week - first_week_days))
-last_day=${$(echo $(cal -h)): -1}
+generate_todos () {
+  echo $1
+  echo "- [ ]"
+  echo "- [ ]"
+  echo "- [ ]"
+  echo "\n"
+}
 
-echo "Last day: $last_day"
-echo "Starting day offset: $starting_day_offset"
-echo "Year: $year"
+get_nth_week () {
+  if [[ $1 == 1 ]]
+  then
+    echo "1st"
+  elif [[ $1 == 2 ]]
+  then
+    echo "2nd"
+  elif [[ $1 == 3 ]]
+  then
+    echo "3rd"
+  elif [[ $1 == 4 ]]
+  then
+    echo "4th"
+  else
+    echo "INVALID ARGUMENT FOR get_nth_week $1"
+  fi
 
-# Loop from current year to end year
-## For each year
-### If the year already exists in destination directory, log warning and skip creation
-### If the year doesn't exist, we create the year directory
-#### For each month
-##### If the month file already exists, log warning and skip creation
-##### If the month file doesn't exist, parse cal command into template
-###### Paste result into the md file
+}
 
+get_day_name_by_index () {
+  if [[ $1 == 0 ]]
+  then
+    echo "Sun"
+  elif [[ $1 == 1 ]]
+  then
+    echo "Mon"
+  elif [[ $1 == 2 ]]
+  then
+    echo "Tues"
+  elif [[ $1 == 3 ]]
+  then
+    echo "Wed" 
+  elif [[ $1 == 4 ]]
+  then
+    echo "Thur"
+  elif [[ $1 == 5 ]]
+  then
+    echo "Fri"
+  elif [[ $1 == 6 ]]
+  then
+    echo "Sat" 
+  else
+    echo "INVALID ARGUMENT FOR generate_day_by_index $1"
+  fi
+}
+
+main () {
+ local year=$(cal -h $1 $2 | head -1 | tail -1 | xargs)
+ echo "# $year"
+ echo "\n"
+ echo "\`\`\`"
+ cal -h $1 $2 | tail -n+2
+ echo "\`\`\`"
+ echo "\n"
+ generate_month $1 $2
+}
+
+main 3 2022
