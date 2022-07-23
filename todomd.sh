@@ -1,5 +1,15 @@
 #!/bin/zsh
 
+generate_heading () {
+  local year=$(cal -h $1 $2 | head -1 | tail -1 | xargs)
+
+  echo "# $year"
+  echo "\`\`\`"
+  cal -h $1 $2 | tail -n+2
+  echo "\`\`\`"
+  echo "\n"
+}
+
 generate_month () {
   local number_of_days_in_week=7
   local first_week_days=${$(echo $(cal -h $1 $2 | head -3 | tail -1)): -1}
@@ -7,16 +17,18 @@ generate_month () {
   local last_day=${$(echo $(cal -h $1 $2)): -1}
   local week_counter=1
 
+  if [[ $day_name_index -gt 0 ]]
+  then
+    generate_todos "### Leading Week Goals"
+  fi
+
   for i in {1..$last_day}
   do
     if [[ $day_name_index == 0 ]]
     then
       local nth_week=$(get_nth_week $week_counter)
-      if [[ week_counter -lt 5 ]]
-      then
-        generate_todos "## $nth_week Week Goals:"
-        week_counter=$((week_counter + 1))
-      fi  
+      generate_todos "## $nth_week Week Goals"
+      week_counter=$((week_counter + 1))
     fi
 
     local day_name=$(get_day_name_by_index $day_name_index)
@@ -53,9 +65,8 @@ get_nth_week () {
   then
     echo "4th"
   else
-    echo "INVALID ARGUMENT FOR get_nth_week $1"
+    echo "Trailing"
   fi
-
 }
 
 get_day_name_by_index () {
@@ -86,14 +97,7 @@ get_day_name_by_index () {
 }
 
 todomd () {
-  local year=$(cal -h $1 $2 | head -1 | tail -1 | xargs)
-
-  echo "# $year"
-  echo "\n"
-  echo "\`\`\`"
-  cal -h $1 $2 | tail -n+2
-  echo "\`\`\`"
-  echo "\n"
+  generate_heading $1 $2
   generate_month $1 $2
 }
 
