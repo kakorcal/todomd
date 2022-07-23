@@ -1,6 +1,6 @@
 # todomd
 
-Calendar todo generator in markdown
+Command line calendar todo generator in markdown
 
 ## Usage
 
