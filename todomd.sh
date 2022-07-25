@@ -90,7 +90,7 @@ get_day_name_by_index () {
   then
     echo "Sat" 
   else
-    echo "INVALID ARGUMENT FOR generate_day_by_index $1"
+    echo "Error: invalid argument for generate_day_by_index $1"
   fi
 }
 
@@ -102,27 +102,38 @@ todomd () {
 main () {
   local month=0
   local year=0
+  local outdir=todomd
 
-  while getopts ":m:y:" option; do
+  while getopts ":m:y:o:" option; do
     case $option in
       m) # month
         month=$OPTARG;;
       y) # year
         year=$OPTARG;;
+      o) # outdir
+        outdir=$OPTARG;;
       \?) # Invalid option
-        echo "Error: Invalid option"
+        echo "Error: invalid option $OPTARG"
         exit;;
     esac
   done
 
+  if [[ -d $outdir ]]
+  then
+    echo "Error: directory '$outdir' already exists"
+    exit
+  else
+    mkdir -p $outdir/$year
+  fi
+
   if [[ $month -gt 0 && $year -gt 0 ]]
   then
-    todomd $month $year
+    todomd $month $year > $outdir/$year/$month.md
   elif [[ $month == 0 && $year -gt 0 ]]
   then
     for i in {1..12}
     do
-      todomd $i $year
+      todomd $i $year > $outdir/$year/$i.md
     done
   else
     echo "Error: options out of range"
