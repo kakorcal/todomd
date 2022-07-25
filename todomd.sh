@@ -118,19 +118,25 @@ main () {
     esac
   done
 
-  if [[ -d $outdir ]]
-  then
-    echo "Error: directory '$outdir' already exists"
-    exit
-  else
-    mkdir -p $outdir/$year
-  fi
-
   if [[ $month -gt 0 && $year -gt 0 ]]
   then
-    todomd $month $year > $outdir/$year/$month.md
+    if [[ -f "$month.md" ]] 
+    then
+      echo "Error: file '$month.md' already exists"
+      exit
+    else
+      todomd $month $year > $month.md
+    fi
   elif [[ $month == 0 && $year -gt 0 ]]
   then
+    if [[ -d $outdir ]]
+    then
+      echo "Error: directory '$outdir' already exists"
+      exit
+    else
+      mkdir -p $outdir/$year
+    fi
+
     for i in {1..12}
     do
       todomd $i $year > $outdir/$year/$i.md
