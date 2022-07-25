@@ -15,16 +15,11 @@ generate_month () {
   local first_week_days=${$(echo $(cal -h $1 $2 | head -3 | tail -1)): -1}
   local day_name_index=$((number_of_days_in_week - first_week_days))
   local last_day=${$(echo $(cal -h $1 $2)): -1}
-  local week_counter=1
-
-  if [[ $day_name_index -gt 0 ]]
-  then
-    generate_todos "### Leading Week Goals"
-  fi
+  local week_counter=0
 
   for i in {1..$last_day}
   do
-    if [[ $day_name_index == 0 ]]
+    if [[ $day_name_index == 0 || $i == 1 ]]
     then
       local nth_week=$(get_nth_week $week_counter)
       generate_todos "## $nth_week Week Goals"
@@ -32,7 +27,7 @@ generate_month () {
     fi
 
     local day_name=$(get_day_name_by_index $day_name_index)
-    generate_todos "### $day_name $1/$i"
+    generate_todos "### $day_name $1/$i\n- [ ] Workout:\n- [ ] Cook:"
     
     if [[ $day_name_index == 6 ]]
     then
@@ -52,7 +47,10 @@ generate_todos () {
 }
 
 get_nth_week () {
-  if [[ $1 == 1 ]]
+  if [[ $1 == 0 ]]
+  then
+    echo "Leading"
+  elif [[ $1 == 1 ]]
   then
     echo "1st"
   elif [[ $1 == 2 ]]
