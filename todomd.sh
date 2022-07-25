@@ -115,9 +115,15 @@ main () {
     esac
   done
 
-  if [[ month -gt 0 && year -gt 0 ]]
+  if [[ $month -gt 0 && $year -gt 0 ]]
   then
     todomd $month $year
+  elif [[ $month == 0 && $year -gt 0 ]]
+  then
+    for i in {1..12}
+    do
+      todomd $i $year
+    done
   else
     echo "Error: options out of range"
   fi
