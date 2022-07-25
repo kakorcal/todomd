@@ -6,7 +6,7 @@ Command line calendar todo generator in markdown
 
 Input
 ```
-./todomd.sh -m 7 -y 2022 > 7.md
+./todomd.sh -m 7 -y 2022 
 ```
 
 Output
@@ -70,3 +70,8 @@ Su Mo Tu We Th Fr Sa
 
 ...
 ```
+
+## Options
+1. m: Specifies which month to generate todos. Accepts values from 1~12
+2. y: Specifies which year to generate todos. Accepts values greater than 0. If month is not specified, it will generate todos for each month of the year.
+3. o: Specifies output directory of the generated todos. Is only supported for the case when only the year is specified
