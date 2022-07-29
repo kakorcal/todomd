@@ -22,12 +22,12 @@ generate_month () {
     if [[ $day_name_index == 0 || $i == 1 ]]
     then
       local nth_week=$(get_nth_week $week_counter)
-      generate_todos "## $nth_week Week Goals"
+      generate_weekly_goals "$nth_week" 
       week_counter=$((week_counter + 1))
     fi
 
     local day_name=$(get_day_name_by_index $day_name_index)
-    generate_todos "### $day_name $1/$i\n- [ ] Workout:\n- [ ] Cook:"
+    generate_daily_todos "$day_name $1/$i"
     
     if [[ $day_name_index == 6 ]]
     then
@@ -38,8 +38,18 @@ generate_month () {
   done
 }
 
-generate_todos () {
-  echo $1
+generate_weekly_goals () {
+  echo "## $1 Week Goals"
+  echo "- [ ] Main:"
+  echo "- [ ]"
+  echo "- [ ]"
+  echo "\n"
+}
+
+generate_daily_todos () {
+  echo "### $1"
+  echo "- [ ] Main:"
+  echo "- [ ]"
   echo "- [ ]"
   echo "- [ ]"
   echo "- [ ]"
