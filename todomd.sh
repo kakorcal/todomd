@@ -40,7 +40,7 @@ generate_month () {
 
 generate_weekly_goals () {
   echo "## $1 Week Goals"
-  echo "- [ ] Main:"
+  echo "- [ ] **Main:**"
   echo "- [ ]"
   echo "- [ ]"
   echo "\n"
@@ -48,7 +48,7 @@ generate_weekly_goals () {
 
 generate_daily_todos () {
   echo "### $1"
-  echo "- [ ] Main:"
+  echo "- [ ] **Main:**"
   echo "- [ ]"
   echo "- [ ]"
   echo "- [ ]"
