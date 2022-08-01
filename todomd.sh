@@ -8,6 +8,7 @@ generate_heading () {
   cal -h $1 $2 | tail -n+2
   echo "\`\`\`"
   echo "\n"
+  generate_monthly_goals
 }
 
 generate_month () {
@@ -38,6 +39,14 @@ generate_month () {
   done
 }
 
+generate_monthly_goals () {
+  echo "## Monthly Goals"
+  echo "- [ ] **Main:**"
+  echo "- [ ]"
+  echo "- [ ]"
+  echo "\n"
+}
+
 generate_weekly_goals () {
   echo "## $1 Week Goals"
   echo "- [ ] **Main:**"
@@ -53,6 +62,7 @@ generate_daily_todos () {
   echo "- [ ]"
   echo "- [ ]"
   echo "- [ ]"
+  echo "- [ ] Plan next day"
   echo "\n"
 }
 
