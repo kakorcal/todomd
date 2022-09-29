@@ -27,8 +27,7 @@ generate_month () {
       week_counter=$((week_counter + 1))
     fi
 
-    local day_name=$(get_day_name_by_index $day_name_index)
-    generate_daily_todos "$day_name $1/$i"
+    generate_daily_todos $day_name_index $1 $i
     
     if [[ $day_name_index == 6 ]]
     then
@@ -41,7 +40,7 @@ generate_month () {
 
 generate_monthly_goals () {
   echo "## Monthly Goals"
-  echo "- [ ] **Main:**"
+  echo "- [ ] **main**"
   echo "- [ ]"
   echo "- [ ]"
   echo "\n"
@@ -49,21 +48,63 @@ generate_monthly_goals () {
 
 generate_weekly_goals () {
   echo "## $1 Week Goals"
-  echo "- [ ] **Main:**"
+  echo "- [ ] **main**"
   echo "- [ ]"
   echo "- [ ]"
   echo "\n"
 }
 
 generate_daily_todos () {
-  echo "### $1"
-  echo "- [ ] **Main:**"
-  echo "- [ ]"
-  echo "- [ ]"
-  echo "- [ ]"
-  echo "- [ ]"
-  echo "- [ ] Plan next day"
+  local day_name=$(get_day_name_by_index $1)
+  local date="### $day_name $2/$3"
+  echo $date
+  generate_routines $1
   echo "\n"
+}
+
+# todo: make this dynamic
+generate_routines () {
+  if [[ $1 == 0 ]]
+  then
+    echo "- [ ] *groceries* | health | 1h 1000 |" 
+    echo "- [ ] **budget** | finance | 1h 1300 | finanical report. compare with finance goals"
+    echo "- [ ] *workout* | health | 1h 1700 | run, pullups, pushups"
+    echo "- [ ] *cook* | health | 1h 1600 |"
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 1 ]]
+  then
+    echo "- [ ] workout | health | 1h 1700 | run, squats" 
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 2 ]]
+  then
+    echo "- [ ] read | career | 30m 0800 |"
+    echo "- [ ] groceries | health | 1h 1000 |"
+    echo "- [ ] cook | health | 1h 1600 |" 
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 3 ]]
+  then
+    echo "- [ ] read | career | 30m 0800 |"
+    echo "- [ ] workout | health | 1h 1800 | walk po in park"
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 4 ]]
+  then
+    echo "- [ ] cook | health | 1h 1600 |" 
+    echo "- [ ] workout | health | 1h 1700 | run, pullups, pushups" 
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 5 ]]
+  then
+    echo "- [ ] groceries | health | 1h 1000 |"
+    echo "- [ ] workout | health | 1h 1700 | run, squats" 
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  elif [[ $1 == 6 ]]
+  then
+    echo "- [ ] read | career | 30 0800 |"
+    echo "- [ ] cook | health | 1h 1600 |" 
+    echo "- [ ] workout | health | 1h 1800 | walk po in park"
+    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+  else
+    echo "Error: invalid argument for generate_routines $1"
+  fi
 }
 
 get_nth_week () {
@@ -110,7 +151,7 @@ get_day_name_by_index () {
   then
     echo "Sat" 
   else
-    echo "Error: invalid argument for generate_day_by_index $1"
+    echo "Error: invalid argument for get_day_name_by_index $1"
   fi
 }
 
