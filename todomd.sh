@@ -39,13 +39,39 @@ generate_month () {
   done
 }
 
-generate_formatting_rules () {
+# todo: make this dynamic
+generate_formatting_rules_and_labels () {
   echo "## Formatting"
   echo "\`\`\`"
   echo "This format ensure todo description is jotted down first. There are no required entries in the second or third column. Increment the carry over count if the todo was not accomplished and is carried over to the next day."
   echo "Example:"
   echo "- [ ] todo description | todo type : goal type @ datetime e estimate c carryover count | optional notes"
   echo "\`\`\`"
+  echo "\n"
+  echo "## Labels"
+  echo "### Goal types"
+  echo "* career" 
+  echo "* finance" 
+  echo "* health" 
+  echo "* relationship" 
+  echo "\n"
+  echo "### Todo types"
+  echo "chore: everyday tasks that are not high priority but have to be done at some point (ie. setup ikea cabinet, make phone call to setup appointment)"
+  echo "project: personal projects to achieve career goals (ie. build S3 static site)"
+  echo "study: personal learning to achieve career goals (ie. watch python course)"
+  echo "job: task that needs to be done at my job (ie. PR reviews, send emails)"
+  echo "plan: research and preparation tasks (ie. look for pet insurance, prepare for code interview)"
+  echo "read: tracking what book I've been reading (ie. read candlestick investing pg 20~40)"
+  echo "notes: tracking notes that I've taken (ie. what is SAML?)"
+  echo "workout: tracking my exercise routine (ie. run 4 miles)"
+  echo "budget: track financial reports"
+  echo "cook: tracking what I have cooked (ie. cook lo mein)"
+  echo "groceries: tracking what food I have to buy (ie. apples, ginger, etc)"
+  echo "buy: tracking everyday things I need to buy (ie. toilet paper, gas, etc)"
+  echo "appointment: any sort of appointment unrelated to my job (ie. dental checkup, pet grooming, etc)"
+  echo "reminder: any sort of misc tasks that need to be jotted down for future reference (ie. buy birthday present)"
+  echo "todo: any task that doesn't fit a specific label (ie. drive to Las Vegas)"
+  echo "sleep: track when I go to bed"
   echo "\n"
 }
 
