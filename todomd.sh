@@ -58,52 +58,20 @@ generate_daily_todos () {
   local day_name=$(get_day_name_by_index $1)
   local date="### $day_name $2/$3"
   echo $date
-  generate_routines $1
+  generate_required_task_by_day $3
   echo "\n"
 }
 
 # todo: make this dynamic
-generate_routines () {
-  if [[ $1 == 0 ]]
+generate_required_task_by_day () {
+  if [[ $1 == 1 ]]
   then
-    echo "- [ ] *groceries* | health | 1h 1000 |" 
-    echo "- [ ] **budget** | finance | 1h 1300 | finanical report. compare with finance goals"
-    echo "- [ ] *workout* | health | 1h 1700 | run, pullups, pushups"
-    echo "- [ ] *cook* | health | 1h 1600 |"
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 1 ]]
+    echo "- [ ] pay rent | chore" 
+  elif [[ $1 == 19 ]]
   then
-    echo "- [ ] workout | health | 1h 1700 | run, squats" 
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 2 ]]
-  then
-    echo "- [ ] read | career | 30m 0800 |"
-    echo "- [ ] groceries | health | 1h 1000 |"
-    echo "- [ ] cook | health | 1h 1600 |" 
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 3 ]]
-  then
-    echo "- [ ] read | career | 30m 0800 |"
-    echo "- [ ] workout | health | 1h 1800 | walk po in park"
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 4 ]]
-  then
-    echo "- [ ] cook | health | 1h 1600 |" 
-    echo "- [ ] workout | health | 1h 1700 | run, pullups, pushups" 
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 5 ]]
-  then
-    echo "- [ ] groceries | health | 1h 1000 |"
-    echo "- [ ] workout | health | 1h 1700 | run, squats" 
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
-  elif [[ $1 == 6 ]]
-  then
-    echo "- [ ] read | career | 30 0800 |"
-    echo "- [ ] cook | health | 1h 1600 |" 
-    echo "- [ ] workout | health | 1h 1800 | walk po in park"
-    echo "- [ ] plan | n/a | 30m 2130 | play next day"
+    echo "- [ ] pay credit card | chore" 
   else
-    echo "Error: invalid argument for generate_routines $1"
+    echo "Error: invalid argument for generate_required_task_by_day $1"
   fi
 }
 
