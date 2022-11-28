@@ -41,11 +41,12 @@ generate_month () {
 
 generate_formatting_rules () {
   echo "## Formatting"
-  echo "\`\`\`\n"
+  echo "\`\`\`"
   echo "This format ensure todo description is jotted down first. There are no required entries in the second or third column. Increment the carry over count if the todo was not accomplished and is carried over to the next day."
   echo "Example:"
   echo "- [ ] todo description | todo type : goal type @ datetime e estimate c carryover count | optional notes"
-  echo "\n\`\`\`\n"
+  echo "\`\`\`"
+  echo "\n"
 }
 
 generate_monthly_goals () {
