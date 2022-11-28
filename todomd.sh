@@ -8,6 +8,7 @@ generate_heading () {
   cal -h $1 $2 | tail -n+2
   echo "\`\`\`"
   echo "\n"
+  generate_formatting_rules
   generate_monthly_goals
 }
 
@@ -38,18 +39,21 @@ generate_month () {
   done
 }
 
+generate_formatting_rules () {
+  echo "## Formatting"
+  echo "This format ensure todo description is jotted down first. There are no required entries in the second or third column. Increment the carry over count if the todo was not accomplished and is carried over to the next day."
+  echo "Example:"
+  echo "- [ ] todo description | todo type : goal type @ datetime e estimate c carryover count | optional notes"
+}
+
 generate_monthly_goals () {
   echo "## Monthly Goals"
-  echo "- [ ] **main**"
-  echo "- [ ]"
   echo "- [ ]"
   echo "\n"
 }
 
 generate_weekly_goals () {
   echo "## $1 Week Goals"
-  echo "- [ ] **main**"
-  echo "- [ ]"
   echo "- [ ]"
   echo "\n"
 }
@@ -66,12 +70,12 @@ generate_daily_todos () {
 generate_required_task_by_day () {
   if [[ $1 == 1 ]]
   then
-    echo "- [ ] pay rent | chore" 
+    echo "- [ ] pay rent | chore:finance" 
   elif [[ $1 == 19 ]]
   then
-    echo "- [ ] pay credit card | chore" 
+    echo "- [ ] pay credit card | chore:finance" 
   else
-    echo "Error: invalid argument for generate_required_task_by_day $1"
+    echo "- [ ]" 
   fi
 }
 
