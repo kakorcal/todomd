@@ -8,7 +8,7 @@ generate_heading () {
   cal -h $1 $2 | tail -n+2
   echo "\`\`\`"
   echo "\n"
-  generate_formatting_rules
+  generate_formatting_rules_and_labels
   generate_monthly_goals
 }
 
