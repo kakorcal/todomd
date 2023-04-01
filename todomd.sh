@@ -8,8 +8,8 @@ generate_heading () {
   cal -h $1 $2 | tail -n+2
   echo "\`\`\`"
   echo "\n"
-  generate_formatting_rules_and_labels
-  generate_monthly_goals
+  # generate_formatting_rules_and_labels
+  # generate_monthly_goals
 }
 
 generate_month () {
@@ -24,7 +24,7 @@ generate_month () {
     if [[ $day_name_index == 0 || $i == 1 ]]
     then
       local nth_week=$(get_nth_week $week_counter)
-      generate_weekly_goals "$nth_week" 
+      # generate_weekly_goals "$nth_week" 
       week_counter=$((week_counter + 1))
     fi
 
@@ -48,8 +48,7 @@ generate_formatting_rules_and_labels () {
   echo "- [ ] todo description | todo type : goal type @ datetime e estimate c carryover count | optional notes"
   echo "\`\`\`"
   echo "\n"
-  echo "## Labels"
-  echo "\n"
+  echo "## Labels\n"
   echo "### Goal types"
   echo "* career" 
   echo "* finance" 
@@ -83,7 +82,7 @@ generate_monthly_goals () {
 }
 
 generate_weekly_goals () {
-  echo "## $1 Week Goals"
+  echo "## $1 Week"
   echo "- [ ]"
   echo "\n"
 }
@@ -100,12 +99,12 @@ generate_daily_todos () {
 generate_required_task_by_day () {
   if [[ $1 == 1 ]]
   then
-    echo "- [ ] pay rent | chore:finance" 
+    echo "- [ ] CHORE | pay rent"
   elif [[ $1 == 19 ]]
   then
-    echo "- [ ] pay credit card | chore:finance" 
+    echo "- [ ] CHORE | pay credit card"
   else
-    echo "- [ ]" 
+    echo "- [ ]"
   fi
 }
 
