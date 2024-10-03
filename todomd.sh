@@ -24,11 +24,11 @@ generate_month () {
     if [[ $day_name_index == 0 || $i == 1 ]]
     then
       local nth_week=$(get_nth_week $week_counter)
-      # generate_weekly_goals "$nth_week" 
+      generate_weekly_goals "$nth_week" 
       week_counter=$((week_counter + 1))
     fi
 
-    generate_daily_todos $day_name_index $1 $i
+    generate_daily_todos $day_name_index $1 $i $last_day
     
     if [[ $day_name_index == 6 ]]
     then
@@ -91,7 +91,8 @@ generate_daily_todos () {
   local day_name=$(get_day_name_by_index $1)
   local date="### $day_name $2/$3"
   echo $date
-  generate_required_task_by_day $3
+  echo "- [ ]"
+  # generate_required_task_by_day $3 $4
   echo "\n"
 }
 
@@ -103,6 +104,9 @@ generate_required_task_by_day () {
   elif [[ $1 == 19 ]]
   then
     echo "- [ ] CHORE | pay credit card"
+  elif [[ $1 == $2 ]] # last day
+  then
+    echo "- [ ] DEV | invest money to index fund"
   else
     echo "- [ ]"
   fi
@@ -196,12 +200,13 @@ main () {
       echo "Error: directory '$outdir' already exists"
       exit
     else
-      mkdir -p $outdir/$year
+      mkdir -p $outdir
+      touch $outdir/$year.md
     fi
 
     for i in {1..12}
     do
-      todomd $i $year > $outdir/$year/$i.md
+      todomd $i $year >> $outdir/$year.md
     done
   else
     echo "Error: options out of range"
